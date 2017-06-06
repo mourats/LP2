@@ -44,7 +44,7 @@ public class Contato {
 	 * @return Retorna o telefone do contato.
 	 */
 	public String getTelefone() {
-		return telefone;
+		return this.telefone;
 	}
 
 	/**
