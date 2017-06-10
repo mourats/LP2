@@ -28,8 +28,8 @@ public class TimeTest {
 
 	@Test
 	public void testAdicionaJogador() {
-		assertEquals(time.adicionaJogador("Vinicius", "12377878744", 145.0), "Jogador adicionado com sucesso!");
-		assertEquals(time.adicionaJogador("Messi", "78979879845", 450.0), "Time completo, jogador não adicionado!");
+		assertEquals(time.adicionaJogador("Vinicius", "12377878744", 145.0), true);
+		assertEquals(time.adicionaJogador("Messi", "78979879845", 450.0), false);
 	}
 
 	@Test

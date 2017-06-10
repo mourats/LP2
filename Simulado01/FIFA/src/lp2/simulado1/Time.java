@@ -14,7 +14,7 @@ public class Time {
 		return this.nomeTime;
 	}
 
-	public String adicionaJogador(String nome, String cpf, double salario) {
+	public boolean adicionaJogador(String nome, String cpf, double salario) {
 
 		Jogador jogador = new Jogador(nome, cpf, salario);
 		boolean guard = false;
@@ -26,11 +26,7 @@ public class Time {
 				break;
 			}
 		}
-		if (!guard) {
-			return "Time completo, jogador não adicionado!";
-		} else {
-			return "Jogador adicionado com sucesso!";
-		}
+		return guard;
 	}
 
 	public String listaJogador(String cpf) {
