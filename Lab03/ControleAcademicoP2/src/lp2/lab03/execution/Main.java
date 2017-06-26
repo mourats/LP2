@@ -1,5 +1,12 @@
 package lp2.lab03.execution;
 
+/**
+ * Classe responsável pela interface com a usuário.
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import java.util.Scanner;
 
 import lp2.lab03.controllers.ControleSistema;
@@ -12,9 +19,9 @@ public class Main {
 	public static void main(String[] args) {
 
 		ControleSistema controleSistema = new ControleSistema();
+		Menu menu = new Menu();
 
 		sc = new Scanner(System.in);
-		Menu menu = new Menu();
 		String op;
 
 		do {

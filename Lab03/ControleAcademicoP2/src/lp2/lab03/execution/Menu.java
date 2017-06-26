@@ -1,5 +1,11 @@
 package lp2.lab03.execution;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 public class Menu {
 	
 	private final String NL = System.lineSeparator();

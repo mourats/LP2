@@ -1,5 +1,11 @@
 package lp2.lab03.controllers;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import java.util.HashSet;
 
 import lp2.lab03.entidades.Aluno;
@@ -35,9 +41,10 @@ public class ControleGrupos {
 
 		String grupoString = "";
 		for (Grupo grupo : conjuntoGrupos) {
-			if (this.sameName(nome, grupo.getNome()))
+			if (this.sameName(nome, grupo.getNome())) {
 				grupoString = grupo.toString();
-			break;
+				break;
+			}
 		}
 		if (grupoString.isEmpty())
 			return "Grupo vazio!";
@@ -55,9 +62,9 @@ public class ControleGrupos {
 
 	}
 
-	private boolean sameName(String nome1, String nome2) {
+	private boolean sameName(String nomeUm, String nomeDois) {
 
-		if (nome1.equalsIgnoreCase(nome2))
+		if (nomeUm.equalsIgnoreCase(nomeDois))
 			return true;
 		else
 			return false;

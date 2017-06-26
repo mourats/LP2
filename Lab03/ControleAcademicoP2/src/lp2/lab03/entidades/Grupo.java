@@ -1,5 +1,11 @@
 package lp2.lab03.entidades;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import java.util.HashSet;
 
 import lp2.lab03.util.Checks;
@@ -27,6 +33,10 @@ public class Grupo {
 
 	public boolean adicionarAluno(Aluno aluno) {
 		return alunosGrupo.add(aluno);
+	}
+	
+	public boolean pertenceGrupo(Aluno aluno) {
+		return alunosGrupo.contains(aluno);
 	}
 
 	@Override

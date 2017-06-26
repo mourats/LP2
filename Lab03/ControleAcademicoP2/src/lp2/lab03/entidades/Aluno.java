@@ -1,11 +1,17 @@
 package lp2.lab03.entidades;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import lp2.lab03.util.Checks;
 
 public class Aluno {
 	
 	private String matricula;
-	
+
 	private String nome;
 	
 	private String curso;
@@ -23,11 +29,60 @@ public class Aluno {
 		this.nome = nome;
 		this.curso = curso;
 	}
+	
+	public String getMatricula(){
+		return this.matricula;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public String getCurso() {
+		return curso;
+	}
 
 	@Override
 	public String toString() {
 		return matricula + " - " + nome + " - " + curso;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((curso == null) ? 0 : curso.hashCode());
+		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
 
-	// Implementar equals e hashcode
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Aluno other = (Aluno) obj;
+		if (curso == null) {
+			if (other.curso != null)
+				return false;
+		} else if (!curso.equals(other.curso))
+			return false;
+		if (matricula == null) {
+			if (other.matricula != null)
+				return false;
+		} else if (!matricula.equals(other.matricula))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}
+
+
 }
