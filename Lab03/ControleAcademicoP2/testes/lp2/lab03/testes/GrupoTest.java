@@ -1,5 +1,11 @@
 package lp2.lab03.testes;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -12,13 +18,15 @@ public class GrupoTest {
 
 	@SuppressWarnings("unused")
 	private Grupo grupoInvalido;
-	private Grupo grupoBasico;
-
+	
+	private Grupo grupoBasico, grupoBasicoDois;
+	
 	private Aluno alunoUm, alunoDois, alunoTres;
 
 	@Before
 	public void criaGrupo() {
 		grupoBasico = new Grupo("LP2");
+		grupoBasicoDois = new Grupo("lp2");
 
 		alunoUm = new Aluno("250", "Gabriel Reyes", "Computação");
 		alunoDois = new Aluno("200", "Angela Ziegler", "Medicina");
@@ -39,7 +47,17 @@ public class GrupoTest {
 		assertEquals(grupoBasico.pertenceGrupo(alunoTres), false);
 		grupoBasico.adicionarAluno(alunoTres);
 		assertEquals(grupoBasico.pertenceGrupo(alunoTres), true);
+		
+		assertEquals(grupoBasico.equals(grupoBasicoDois), true);
 
+	}
+	
+	@Test
+	public void testEquals(){
+		
+		assertEquals(grupoBasico.equals(grupoBasicoDois), true);
+		grupoBasico = new Grupo("Lista");
+		assertEquals(grupoBasico.equals(grupoBasicoDois), false);
 	}
 
 	@Test

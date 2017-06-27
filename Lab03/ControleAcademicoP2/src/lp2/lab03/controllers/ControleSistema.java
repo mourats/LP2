@@ -8,14 +8,14 @@ package lp2.lab03.controllers;
 
 public class ControleSistema {
 
-	ControleAlunos controleAlunos;
-	ControleGrupos controleGrupos;
-	Exercicios exercicios;
+	private ControleAlunos controleAlunos;
+	private ControleGrupos controleGrupos;
+	private ControleAlunosQueRespondemQuestoes controleAlunosQueRespondemQuestoes;
 
 	public ControleSistema() {
 		controleAlunos = new ControleAlunos();
 		controleGrupos = new ControleGrupos();
-		exercicios = new Exercicios();
+		controleAlunosQueRespondemQuestoes = new ControleAlunosQueRespondemQuestoes();
 
 	}
 
@@ -72,12 +72,12 @@ public class ControleSistema {
 		if (!controleAlunos.existeAluno(matricula))
 			return false;
 
-		exercicios.cadastrarAlunos(controleAlunos.recuperaAluno(matricula));
+		controleAlunosQueRespondemQuestoes.cadastrarAlunos(controleAlunos.recuperaAluno(matricula));
 		return true;
 	}
 
 	public String imprimirAlunosQueRespondemQuestoes() {
-		return exercicios.imprimirListaAlunos();
+		return controleAlunosQueRespondemQuestoes.imprimirListaAlunos();
 	}
 
 }

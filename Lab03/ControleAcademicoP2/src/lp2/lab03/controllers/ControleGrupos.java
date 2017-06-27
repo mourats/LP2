@@ -7,13 +7,15 @@ package lp2.lab03.controllers;
  */
 
 import java.util.HashSet;
+import java.util.Set;
 
 import lp2.lab03.entidades.Aluno;
 import lp2.lab03.entidades.Grupo;
 
 public class ControleGrupos {
 
-	private HashSet<Grupo> conjuntoGrupos;
+	private Set<Grupo> conjuntoGrupos;
+	private final String NL = System.lineSeparator();
 
 	public ControleGrupos() {
 		conjuntoGrupos = new HashSet<Grupo>();
@@ -26,9 +28,11 @@ public class ControleGrupos {
 	}
 
 	public boolean alocarAlunoGrupo(Aluno aluno, String nome) {
+		
+		Grupo grupoRef = new Grupo(nome);
 
 		for (Grupo grupo : conjuntoGrupos) {
-			if (this.sameName(nome, grupo.getNome())) {
+			if (grupo.equals(grupoRef)) {
 				grupo.adicionarAluno(aluno);
 				return true;
 			}
@@ -40,34 +44,31 @@ public class ControleGrupos {
 	public String imprimeGrupo(String nome) {
 
 		String grupoString = "";
+		Grupo grupoRef = new Grupo(nome);
+		
 		for (Grupo grupo : conjuntoGrupos) {
-			if (this.sameName(nome, grupo.getNome())) {
-				grupoString = grupo.toString();
+
+			if (grupo.equals(grupoRef)) {
+				if(grupo.toString().isEmpty())
+					grupoString = "Grupo vazio!";
+				else
+					grupoString += "Alunos do grupo " + grupo.getNome() + ":" + NL + grupo.toString();
 				break;
 			}
 		}
-		if (grupoString.isEmpty())
-			return "Grupo vazio!";
 
 		return grupoString;
 	}
 
 	public boolean existeGrupo(String nome) {
-
-		for (Grupo grupo : conjuntoGrupos) {
-			if (this.sameName(nome, grupo.getNome()))
+		
+		Grupo grupoRef = new Grupo(nome);
+		
+		for (Grupo grupo: conjuntoGrupos){
+			if(grupo.equals(grupoRef))
 				return true;
 		}
 		return false;
-
-	}
-
-	private boolean sameName(String nomeUm, String nomeDois) {
-
-		if (nomeUm.equalsIgnoreCase(nomeDois))
-			return true;
-		else
-			return false;
 	}
 
 }

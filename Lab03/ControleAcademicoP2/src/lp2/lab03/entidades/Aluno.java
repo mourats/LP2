@@ -9,15 +9,15 @@ package lp2.lab03.entidades;
 import lp2.lab03.util.Checks;
 
 public class Aluno {
-	
+
 	private String matricula;
 
 	private String nome;
-	
+
 	private String curso;
-	
-	public Aluno(String matricula, String nome, String curso){
-		
+
+	public Aluno(String matricula, String nome, String curso) {
+
 		Checks.verificaMatriculaNula(matricula);
 		Checks.verificaMatriculaVazia(matricula);
 		Checks.verificaNomeNulo(nome);
@@ -29,11 +29,11 @@ public class Aluno {
 		this.nome = nome;
 		this.curso = curso;
 	}
-	
-	public String getMatricula(){
+
+	public String getMatricula() {
 		return this.matricula;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -46,7 +46,7 @@ public class Aluno {
 	public String toString() {
 		return matricula + " - " + nome + " - " + curso;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -59,30 +59,17 @@ public class Aluno {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
+
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aluno other = (Aluno) obj;
-		if (curso == null) {
-			if (other.curso != null)
-				return false;
-		} else if (!curso.equals(other.curso))
-			return false;
-		if (matricula == null) {
-			if (other.matricula != null)
-				return false;
-		} else if (!matricula.equals(other.matricula))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		return true;
-	}
+		Aluno ref = (Aluno) obj;
 
+		if (ref.getMatricula().equals(this.getMatricula()))
+			return true;
+
+		return false;
+	}
 
 }

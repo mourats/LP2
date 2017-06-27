@@ -7,12 +7,13 @@ package lp2.lab03.controllers;
  */
 
 import java.util.HashMap;
+import java.util.Map;
 
 import lp2.lab03.entidades.Aluno;
 
 public class ControleAlunos {
 
-	private HashMap<String, Aluno> mapaMatriculaAlunos;
+	private Map<String, Aluno> mapaMatriculaAlunos;
 
 	public ControleAlunos() {
 		mapaMatriculaAlunos = new HashMap<>();

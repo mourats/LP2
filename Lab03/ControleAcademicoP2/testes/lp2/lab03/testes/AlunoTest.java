@@ -1,5 +1,11 @@
 package lp2.lab03.testes;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -9,7 +15,7 @@ import lp2.lab03.entidades.Aluno;
 
 public class AlunoTest {
 
-	private Aluno alunoBasico;
+	private Aluno alunoBasico, alunoRepetidoUm, alunoRepetidoDois;
 
 	@SuppressWarnings("unused")
 	private Aluno alunoInvalido;
@@ -17,6 +23,9 @@ public class AlunoTest {
 	@Before
 	public void criaAluno() {
 		alunoBasico = new Aluno("116210967", "Thiago Santos", "Ciência da Computação");
+		
+		alunoRepetidoUm = new Aluno("106210900", "Thiago Santos", "Ciência da Computação");
+		alunoRepetidoDois = new Aluno("106210900", "João Batista", "Administração");
 	}
 
 	@Test
@@ -24,6 +33,13 @@ public class AlunoTest {
 
 		String msg = "116210967 - Thiago Santos - Ciência da Computação";
 		assertEquals(alunoBasico.toString(), msg);
+	}
+	
+	@Test
+	public void testEquals(){
+		
+		assertEquals(alunoRepetidoUm.equals(alunoBasico), false);
+		assertEquals(alunoRepetidoUm.equals(alunoRepetidoDois), true);
 	}
 
 	/**

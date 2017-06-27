@@ -1,5 +1,11 @@
 package lp2.lab03.testes;
 
+/**
+ * 
+ * Laboratório de Programação 2 - Lab 03
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -44,7 +50,7 @@ public class ControleGruposTest {
 	public void testExisteGrupo() {
 		controleGrupos.adicionaGrupo(grupoUm.getNome());
 		controleGrupos.adicionaGrupo(grupoDois.getNome());
-		
+
 		assertEquals(controleGrupos.existeGrupo(grupoUm.getNome().toUpperCase()), true);
 		assertEquals(controleGrupos.existeGrupo(grupoDois.getNome().toUpperCase()), true);
 	}
@@ -57,11 +63,13 @@ public class ControleGruposTest {
 
 		assertEquals(controleGrupos.imprimeGrupo(grupoUm.getNome()), "Grupo vazio!");
 		controleGrupos.alocarAlunoGrupo(alunoUm, grupoUm.getNome());
-		assertEquals(controleGrupos.imprimeGrupo(grupoUm.getNome()), "* " + alunoUm.toString() + NL);
+		assertEquals(controleGrupos.imprimeGrupo(grupoUm.getNome()),
+				"Alunos do grupo " + grupoUm.getNome() + ":" + NL + "* " + alunoUm.toString() + NL);
 
 		assertEquals(controleGrupos.imprimeGrupo(grupoDois.getNome()), "Grupo vazio!");
 		controleGrupos.alocarAlunoGrupo(alunoDois, grupoDois.getNome());
-		assertEquals(controleGrupos.imprimeGrupo(grupoDois.getNome()), "* " + alunoDois.toString() + NL);
+		assertEquals(controleGrupos.imprimeGrupo(grupoDois.getNome()),
+				"Alunos do grupo " + grupoDois.getNome() + ":" + NL + "* " + alunoDois.toString() + NL);
 	}
 
 }
