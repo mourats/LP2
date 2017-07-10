@@ -3,6 +3,10 @@ package lp2.lab04.p1;
 import java.util.HashSet;
 import java.util.Set;
 
+import lp2.lab04.p1.enums.Previsao;
+import lp2.lab04.p1.enums.Status;
+import lp2.lab04.p1.util.Checks;
+
 public class Cenario {
 
 	private final String NL = System.lineSeparator();
@@ -13,6 +17,10 @@ public class Cenario {
 	private Set<Aposta> apostas;
 
 	public Cenario(String descricao) {
+		
+		Checks.verificaDescricaoNula(descricao);
+		Checks.verificaDescricaoVazia(descricao);
+		
 		this.descricao = descricao;
 		this.estado = Status.NAO_FINALIZADO;
 		this.apostas = new HashSet<Aposta>();
@@ -20,7 +28,7 @@ public class Cenario {
 
 	@Override
 	public String toString() {
-		return "Descrição: " + this.descricao + " - Estado: " + this.estado;
+		return this.descricao + " - " + this.estado.getStatus();
 	}
 
 	public void adicionarNovaAposta(String apostador, int valor, String previsao) {

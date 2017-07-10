@@ -1,5 +1,8 @@
 package lp2.lab04.p1;
 
+import lp2.lab04.p1.enums.Previsao;
+import lp2.lab04.p1.util.Checks;
+
 public class Aposta {
 
 	private String apostador;
@@ -7,14 +10,35 @@ public class Aposta {
 	private int valor;
 
 	public Aposta(String apostador, int valor, String previsao) {
+		
+		Checks.verificaApostadorNulo(apostador);
+		Checks.verificaApostadorVazio(apostador);
+		Checks.verificaValorZero(valor);
+		Checks.verificaPrevisaoNula(previsao);
+		Checks.verificaPrevisaoVazia(previsao);
+		
 		this.apostador = apostador;
 		this.valor = valor;
-		
+		identificaPrevisaoAposta(previsao);
+	}
+
+
+	private void identificaPrevisaoAposta(String previsao) {
 		if (previsao.equals("VAI ACONTECER"))
 			this.previsao = Previsao.VAI_ACONTECER;
-		else
+		else if (previsao.equals("N VAI ACONTECER"))
 			this.previsao = Previsao.NAO_VAI_ACONTECER;
+		else
+			throw new IllegalArgumentException("PREVISÃO INDISPONÍVEL!");
 	}
+
+	
+	@Override
+	public String toString() {
+		double representacaoRealValor = ((double) this.valor) / 100;
+		return this.apostador + " - R$" + representacaoRealValor + "0 - " + this.previsao.getPrevisao();
+	}
+
 
 	public String getApostador() {
 		return this.apostador;
@@ -27,29 +51,5 @@ public class Aposta {
 	public int getValor() {
 		return valor;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((apostador == null) ? 0 : apostador.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Aposta ref = (Aposta) obj;
-
-		if (ref.getApostador() == this.apostador)
-			return true;
-
-		return false;
-	}
-
+	
 }

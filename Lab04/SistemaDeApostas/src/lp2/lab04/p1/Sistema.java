@@ -1,7 +1,7 @@
 package lp2.lab04.p1;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sistema {
 
@@ -9,36 +9,35 @@ public class Sistema {
 
 	private double taxa;
 	private int caixa;
-	private Map<Integer, Cenario> cenarios;
-	private int idCenario;
+	private List<Cenario> cenarios;
 
 	public Sistema(int caixa, double taxa) {
 		this.caixa = caixa;
 		this.taxa = taxa;
-		this.cenarios = new HashMap<Integer, Cenario>();
-		idCenario = 0;
+		this.cenarios = new ArrayList<Cenario>();
+
 	}
 
 	public int getCaixa() {
 		return caixa;
 	}
 
-	public void cadastrarCenario(String descricao) {
+	public int cadastrarCenario(String descricao) {
 
 		Cenario cenario = new Cenario(descricao);
-		cenarios.put(idCenario, cenario);
-		idCenario++;
+		cenarios.add(cenario);
+		return cenarios.indexOf(cenario);
 	}
 
 	public String exibirCenario(int cenario) {
-		return cenarios.get(cenario).toString();
+		return cenario + " - " + cenarios.get(cenario).toString();
 	}
 
 	public String exibirCenarios() {
 		
 		String stringRetorno = "";
-		for (Cenario cenario : cenarios.values())
-			stringRetorno += cenario.toString() + NL;
+		for (Cenario cenario : cenarios)
+			stringRetorno += cenarios.indexOf(cenario) + " - " + cenario.toString() + NL;
 
 		return stringRetorno;
 	}
@@ -79,7 +78,7 @@ public class Sistema {
 
 	public int getTotalRateioCenario(int cenario) {
 		Cenario refCenario = cenarios.get(cenario);
-		int valor = (int) (refCenario.getValorTotalPerdedores() - (refCenario.getValorTotalPerdedores() * this.taxa));
+		int valor = (int) (refCenario.getValorTotalPerdedores() - getCaixaCenario(cenario));
 		return valor; 
 	}
 

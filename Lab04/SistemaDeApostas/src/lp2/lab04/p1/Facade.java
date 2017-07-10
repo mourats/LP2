@@ -12,8 +12,8 @@ public class Facade {
 		return sistema.getCaixa();
 	}
 
-	public void cadastrarCenario(String descricao) {
-		sistema.cadastrarCenario(descricao);
+	public int cadastrarCenario(String descricao) {
+		return sistema.cadastrarCenario(descricao);
 	}
 
 	public String exibirCenario(int cenario) {
