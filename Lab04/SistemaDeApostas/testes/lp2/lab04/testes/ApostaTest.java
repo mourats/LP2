@@ -1,10 +1,18 @@
 package lp2.lab04.testes;
 
+/**
+ * Classe responsável por realizar os testes na classe Aposta.
+ * 
+ * Laboratório de Programação 2 - Lab 04 Parte 01
+ * 
+ * @author Thiago Santos de Moura - 116210967
+ */
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import lp2.lab04.p1.Aposta;
+import lp2.lab04p1.entidades.Aposta;
 
 public class ApostaTest {
 
