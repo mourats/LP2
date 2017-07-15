@@ -25,6 +25,10 @@ public class Facade {
 	public int cadastrarCenario(String descricao) {
 		return sistema.cadastrarCenario(descricao);
 	}
+	
+	public int cadastrarCenario(String descricao, int bonus){
+		return sistema.cadastrarCenario(descricao, bonus);
+	}
 
 	public String exibirCenario(int cenario) {
 		return sistema.exibirCenario(cenario);
@@ -36,6 +40,22 @@ public class Facade {
 
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		sistema.cadastrarAposta(cenario, apostador, valor, previsao);
+	}
+	
+	public int cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custo){
+		return sistema.cadastrarAposta(cenario, apostador, valor, previsao, valorSeguro, custo);
+	}
+	
+	public int cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxaSegura, int custo){
+		return sistema.cadastrarAposta(cenario, apostador, valor, previsao, taxaSegura, custo);
+	}
+	
+	public int alterarSeguroValor(int cenario, int apostaAssegurada, int valor){
+		return sistema.alterarSeguroValor(cenario, apostaAssegurada, valor);
+	}
+	
+	public int alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa){
+		return sistema.alterarSeguroTaxa(cenario, apostaAssegurada, taxa);
 	}
 
 	public int valorTotalDeApostas(int cenario) {

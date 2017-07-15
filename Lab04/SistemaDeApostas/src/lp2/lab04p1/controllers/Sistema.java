@@ -32,8 +32,9 @@ public class Sistema {
 	 */
 	public Sistema(int caixa, double taxa) {
 
-		Checks.verificaCaixaMenorZero(caixa, "Erro na inicializacao: ");
-		Checks.verificaTaxaMenorZero(taxa, "Erro na inicializacao: ");
+		String msgErro = "Erro na inicializacao: ";
+		Checks.verificaCaixaMenorZero(caixa, msgErro);
+		Checks.verificaTaxaMenorZero(taxa, msgErro);
 
 		this.caixa = caixa;
 		this.taxa = taxa;
@@ -46,7 +47,7 @@ public class Sistema {
 	}
 
 	/**
-	 * Método responsável por cadastrar um novo cenário.
+	 * Método responsável por cadastrar um novo cenário bônus.
 	 * 
 	 * @param descricao
 	 *            Descrição do novo cenário.
@@ -56,6 +57,22 @@ public class Sistema {
 	public int cadastrarCenario(String descricao) {
 
 		Cenario cenario = new Cenario(descricao);
+		cenarios.add(cenario);
+		return cenarios.indexOf(cenario);
+	}
+
+	/**
+	 * Método responsável por cadastrar um novo cenário.
+	 * 
+	 * @param descricao
+	 *            Descrição do novo cenário.
+	 * @param bonus
+	 *            Bônus do novo cenário.
+	 * @return Retorna o int refente a sua posição no ArrayList.
+	 */
+	public int cadastrarCenario(String descricao, int bonus) {
+		this.caixa -= bonus;
+		CenarioBonus cenario = new CenarioBonus(descricao, bonus);
 		cenarios.add(cenario);
 		return cenarios.indexOf(cenario);
 	}
@@ -71,8 +88,8 @@ public class Sistema {
 	 */
 	public String exibirCenario(int cenario) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro na consulta de cenario: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro na consulta de cenario: ");
+		String msgErro = "Erro na consulta de cenario: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		return cenario + " - " + cenarios.get(cenario - 1).toString();
 	}
@@ -105,12 +122,100 @@ public class Sistema {
 	 */
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro no cadastro de aposta: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro no cadastro de aposta: ");
+		String msgErro = "Erro no cadastro de aposta: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
 		refCenario.adicionarNovaAposta(apostador, valor, previsao);
 
+	}
+
+	/**
+	 * 
+	 * @param cenario
+	 * @param apostador
+	 * @param valor
+	 * @param previsao
+	 * @param valorSeguro
+	 * @param custo
+	 * @return
+	 */
+	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custo) {
+
+		String msgErro = "Erro no cadastro de aposta assegurada por valor: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
+
+		this.caixa += custo;
+		Cenario refCenario = cenarios.get(cenario - 1);
+		return refCenario.adicionarNovaApostaSegura(apostador, valor, previsao, valorSeguro);
+
+	}
+
+	/**
+	 * 
+	 * @param cenario
+	 * @param apostador
+	 * @param valor
+	 * @param previsao
+	 * @param taxaSegura
+	 * @param custo
+	 * @return
+	 */
+	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao, double taxaSegura,
+			int custo) {
+
+		String msgErro = "Erro no cadastro de aposta assegurada por taxa: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
+
+		this.caixa += custo;
+		Cenario refCenario = cenarios.get(cenario - 1);
+		return refCenario.adicionarNovaApostaSegura(apostador, valor, previsao, taxaSegura);
+
+	}
+
+	/**
+	 * Método responsável por modularizar a validação do cenário escolhido para
+	 * ser acessado.
+	 * 
+	 * @param cenario
+	 *            Cenário escolhido.
+	 */
+	private void validacaoNoCenarioEscolhido(int cenario, String msgErro) {
+
+		Checks.verificaCenarioInvalido(cenario, msgErro);
+		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), msgErro);
+	}
+
+	/**
+	 * 
+	 * @param cenario
+	 * @param apostaAssegurada
+	 * @param valor
+	 * @return
+	 */
+	public int alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
+		
+		String msgErro = "Erro na alteracao do seguro: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
+		
+		Cenario refCenario = cenarios.get(cenario - 1);
+		return refCenario.alterarSeguroAposta(apostaAssegurada, valor);
+	}
+
+	/**
+	 * 
+	 * @param cenario
+	 * @param apostaAssegurada
+	 * @param taxa
+	 * @return
+	 */
+	public int alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
+		
+		String msgErro = "Erro na alteracao do seguro: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
+		
+		Cenario refCenario = cenarios.get(cenario - 1);
+		return refCenario.alterarSeguroAposta(apostaAssegurada, taxa);
 	}
 
 	/**
@@ -124,8 +229,8 @@ public class Sistema {
 	 */
 	public int valorTotalApostas(int cenario) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro na consulta do valor total de apostas: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro na consulta do valor total de apostas: ");
+		String msgErro = "Erro na consulta do valor total de apostas: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
 		return refCenario.valorTotalApostasCenario();
@@ -142,8 +247,8 @@ public class Sistema {
 	 */
 	public int totalDeApostas(int cenario) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro na consulta do total de apostas: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro na consulta do total de apostas: ");
+		String msgErro = "Erro na consulta do total de apostas: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
 		return refCenario.totalApostasCenario();
@@ -160,8 +265,8 @@ public class Sistema {
 	 */
 	public String exibeApostas(int cenario) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro na consulta de aposta: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro na consulta de aposta: ");
+		String msgErro = "Erro na consulta de aposta: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
 		return refCenario.exibirApostasCenario();
@@ -178,14 +283,16 @@ public class Sistema {
 	 */
 	public void fecharAposta(int cenario, boolean ocorreu) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro ao fechar aposta: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro ao fechar aposta: ");
+		String msgErro = "Erro ao fechar aposta: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
-		Checks.verificaCenarioJaFechado(refCenario.getEstado(), "Erro ao fechar aposta: ");
-		
+		Checks.verificaCenarioJaFechado(refCenario.getEstado(), msgErro);
+
 		refCenario.fecharApostaCenario(ocorreu);
 		this.caixa += getCaixaCenario(cenario);
+		
+		this.caixa -= refCenario.pagarSegurosCenario();
 
 	}
 
@@ -200,13 +307,13 @@ public class Sistema {
 	 */
 	public int getCaixaCenario(int cenario) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro na consulta do caixa do cenario: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro na consulta do caixa do cenario: ");
+		String msgErro = "Erro na consulta do caixa do cenario: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
-		Checks.verificaCenarioAindaAberto(refCenario.getEstado(), "Erro na consulta do caixa do cenario: ");
-		
-		return (int) (refCenario.getValorTotalPerdedores() * this.taxa);
+		Checks.verificaCenarioAindaAberto(refCenario.getEstado(), msgErro);
+
+		return (int) (refCenario.getValorTotalArrecadadoPerdedoresPadrao() * this.taxa);
 
 	}
 
@@ -221,12 +328,12 @@ public class Sistema {
 	 */
 	public int getTotalRateioCenario(int cenario) {
 
-		Checks.verificaCenarioInvalido(cenario, "Erro na consulta do total de rateio do cenario: ");
-		Checks.verificaCenarioNaoCadastrado(cenario, cenarios.size(), "Erro na consulta do total de rateio do cenario: ");
+		String msgErro = "Erro na consulta do total de rateio do cenario: ";
+		validacaoNoCenarioEscolhido(cenario, msgErro);
 
 		Cenario refCenario = cenarios.get(cenario - 1);
-		Checks.verificaCenarioAindaAberto(refCenario.getEstado(), "Erro na consulta do total de rateio do cenario: ");
-		int valor = (int) (refCenario.getValorTotalPerdedores() - getCaixaCenario(cenario));
+		Checks.verificaCenarioAindaAberto(refCenario.getEstado(), msgErro);
+		int valor = (refCenario.getValorTotalArrecadadoPerdedoresModificado() - getCaixaCenario(cenario));
 		return valor;
 	}
 

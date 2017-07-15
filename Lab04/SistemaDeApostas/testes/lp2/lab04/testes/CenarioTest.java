@@ -146,8 +146,8 @@ public class CenarioTest {
 		cenarioBasicoUm.fecharApostaCenario(true);
 		cenarioBasicoDois.fecharApostaCenario(false);
 
-		assertEquals(cenarioBasicoUm.getValorTotalPerdedores(), 21000);
-		assertEquals(cenarioBasicoDois.getValorTotalPerdedores(), 8500);
+		assertEquals(cenarioBasicoUm.getValorTotalArrecadadoPerdedoresPadrao(), 21000);
+		assertEquals(cenarioBasicoDois.getValorTotalArrecadadoPerdedoresPadrao(), 8500);
 
 	}
 

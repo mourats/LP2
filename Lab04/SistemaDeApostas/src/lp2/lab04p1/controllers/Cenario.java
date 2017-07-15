@@ -1,5 +1,8 @@
 package lp2.lab04p1.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Classe responsável por moldar a representação de um cenário e controlar as apostas de um sistema.
  * 
@@ -8,10 +11,8 @@ package lp2.lab04p1.controllers;
  * @author Thiago Santos de Moura - 116210967
  */
 
-import java.util.HashSet;
-import java.util.Set;
-
 import lp2.lab04p1.entidades.Aposta;
+import lp2.lab04p1.entidades.ApostaSegura;
 import lp2.lab04p1.enums.Previsao;
 import lp2.lab04p1.enums.Status;
 import lp2.lab04p1.util.Checks;
@@ -23,7 +24,7 @@ public class Cenario {
 	private String descricao;
 	private Status estado;
 
-	private Set<Aposta> apostas;
+	private List<Aposta> apostas;
 
 	/**
 	 * Construtor responsável por inicializar um cenário, validando sua
@@ -34,25 +35,27 @@ public class Cenario {
 	 */
 	public Cenario(String descricao) {
 
-		Checks.verificaDescricaoNula(descricao, "Erro no cadastro de cenario: ");
-		Checks.verificaDescricaoVazia(descricao, "Erro no cadastro de cenario: ");
+		String msgErro = "Erro no cadastro de cenario: ";
+		Checks.verificaDescricaoNula(descricao, msgErro);
+		Checks.verificaDescricaoVazia(descricao, msgErro);
 
 		this.descricao = descricao;
 		this.estado = Status.NAO_FINALIZADO;
-		this.apostas = new HashSet<Aposta>();
+		this.apostas = new ArrayList<Aposta>();
 	}
 
 	public String getEstado() {
 		return this.estado.getStatus();
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.descricao + " - " + this.estado.getStatus();
 	}
 
 	/**
-	 * Método responsável por adicionar uma aposta ao HashSet de apostas.
+	 * Método responsável por adicionar uma aposta sem seguro ao ArrayList de
+	 * apostas.
 	 * 
 	 * @param apostador
 	 *            Nome do apostador.
@@ -62,9 +65,69 @@ public class Cenario {
 	 *            Previsão da aposta.
 	 */
 	public void adicionarNovaAposta(String apostador, int valor, String previsao) {
-		Aposta aposta = new Aposta(apostador, valor, previsao);
+		
+		String msgErro = "Erro no cadastro de aposta: ";
+		validacaoDadosDaAposta(apostador, valor, previsao, msgErro);
+		
+		Previsao previsaoIdentificada = Previsao.identificaPrevisao(previsao, msgErro);
+		Aposta aposta = new Aposta(apostador, valor, previsaoIdentificada);
+		
 		apostas.add(aposta);
 
+	}
+
+	protected void validacaoDadosDaAposta(String apostador, int valor, String previsao, String msgErro) {
+		Checks.verificaApostadorVazio(apostador, msgErro);
+		Checks.verificaValorZero(valor, msgErro);
+		Checks.verificaPrevisaoVazia(previsao, msgErro);
+	}
+
+	/**
+	 * Método responsável por adicionar uma aposta com seguro de valor ao
+	 * ArrayList de apostas.
+	 * 
+	 * @param apostador
+	 *            Nome do apostador.
+	 * @param valor
+	 *            Valor da aposta.
+	 * @param previsao
+	 *            Previsão da aposta.
+	 * @param valorSeguro
+	 *            Valor assegurado da aposta.
+	 */
+	public int adicionarNovaApostaSegura(String apostador, int valor, String previsao, int valorSeguro) {
+		
+		String msgErro = "Erro no cadastro de aposta assegurada por valor: ";
+		validacaoDadosDaAposta(apostador, valor, previsao, msgErro);
+		
+		Previsao previsaoIdentificada = Previsao.identificaPrevisao(previsao, msgErro);
+		ApostaSegura aposta = new ApostaSegura(apostador, valor, previsaoIdentificada, valorSeguro);
+		apostas.add(aposta);
+		return apostas.indexOf(aposta);
+	}
+
+	/**
+	 * Método responsável por adicionar uma aposta com seguro de taxa ao
+	 * ArrayList de apostas.
+	 * 
+	 * @param apostador
+	 *            Nome do apostador.
+	 * @param valor
+	 *            Valor da aposta.
+	 * @param previsao
+	 *            Previsão da aposta.
+	 * @param taxaSegura
+	 *            Taxa assegurada da aposta.
+	 */
+	public int adicionarNovaApostaSegura(String apostador, int valor, String previsao, double taxaSegura) {
+		
+		String msgErro = "Erro no cadastro de aposta assegurada por taxa: ";
+		validacaoDadosDaAposta(apostador, valor, previsao, msgErro);
+		
+		Previsao previsaoIdentificada = Previsao.identificaPrevisao(previsao, msgErro);
+		ApostaSegura aposta = new ApostaSegura(apostador, valor, previsaoIdentificada, taxaSegura);
+		apostas.add(aposta);
+		return apostas.indexOf(aposta);
 	}
 
 	/**
@@ -118,12 +181,12 @@ public class Cenario {
 	}
 
 	/**
-	 * Método responsável por retornar o valor total arrecado dos perdedores de
-	 * um cenário.
+	 * Método responsável por retornar o valor total arrecadado dos perdedores
+	 * de um cenário normal.
 	 * 
 	 * @return Retorna um int com esse valor.
 	 */
-	public int getValorTotalPerdedores() {
+	public int getValorTotalArrecadadoPerdedoresPadrao() {
 		int valorTotal = 0;
 		boolean resultado;
 		resultado = resultadoCenario();
@@ -140,6 +203,16 @@ public class Cenario {
 	}
 
 	/**
+	 * Método responsável por retornar o valor total arrecadado dos perdedores
+	 * de um cenário mais a sua possível alteração em classes filhas.
+	 * 
+	 * @return Retorna um int com esse valor.
+	 */
+	public int getValorTotalArrecadadoPerdedoresModificado() {
+		return getValorTotalArrecadadoPerdedoresPadrao();
+	}
+
+	/**
 	 * Método responsável por encapsular a verificação do resultado de um
 	 * cenário.
 	 * 
@@ -153,4 +226,74 @@ public class Cenario {
 			resultado = false;
 		return resultado;
 	}
+
+	/**
+	 * Método responsável por alterar o tipo de seguro de uma aposta assegurada,
+	 * para seguro de valor.
+	 * 
+	 * @param apostaAssegurada
+	 *            Index da aposta escolhida.
+	 * @param taxa
+	 *            Taxa assegurada.
+	 * 
+	 * @return Retorna o index dessa aposta.
+	 */
+	public int alterarSeguroAposta(int apostaAssegurada, int valor) {
+
+		String msgErro = "Erro na alteracao do seguro: ";
+		validacaoApostaEscolhida(apostaAssegurada, msgErro);
+
+		Aposta aposta = apostas.get(apostaAssegurada);
+		Checks.verificaApostaNaoSegura(aposta, msgErro);
+
+		((ApostaSegura) aposta).alterarSeguro(valor);
+		return apostas.indexOf(aposta);
+	}
+
+	/**
+	 * Método responsável por alterar o tipo de seguro de uma aposta assegurada,
+	 * para seguro de taxa.
+	 * 
+	 * @param apostaAssegurada
+	 *            Index da aposta escolhida.
+	 * @param taxa
+	 *            Taxa assegurada.
+	 * 
+	 * @return Retorna o index dessa aposta.
+	 */
+	public int alterarSeguroAposta(int apostaAssegurada, double taxa) {
+
+		String msgErro = "Erro na alteracao do seguro: ";
+		validacaoApostaEscolhida(apostaAssegurada, msgErro);
+
+		Aposta aposta = apostas.get(apostaAssegurada);
+		Checks.verificaApostaNaoSegura(aposta, msgErro);
+
+		((ApostaSegura) aposta).alterarSeguro(taxa);
+		return apostas.indexOf(aposta);
+	}
+
+	/**
+	 * Método responsável por validar a aposta escolhida.
+	 * 
+	 * @param apostaAssegurada
+	 *            Index da aposta escolhida.
+	 * @param msgErro
+	 *            Mensagem de erro do respectivo método.
+	 */
+	private void validacaoApostaEscolhida(int apostaAssegurada, String msgErro) {
+
+		Checks.verificaApostaInvalida(apostaAssegurada, msgErro);
+		Checks.verificaApostaNaoCadastrada(apostaAssegurada, apostas.size(), msgErro);
+	}
+
+	public int pagarSegurosCenario() {
+		int valorSeguros = 0;
+		for (Aposta aposta : apostas) {
+			if (aposta.getClass() != Aposta.class)
+				valorSeguros += ((ApostaSegura) aposta).getValorSegurado();
+		}
+		return valorSeguros;
+	}
+
 }
