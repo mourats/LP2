@@ -6,8 +6,17 @@ public class SeguroValor extends Seguro {
 
 	public SeguroValor(int valor) {
 		this.valor = valor;
+		super.setTipo("VALOR");
 	}
 
+	@Override
+	public String toString(){
+		double representacaoDoubleValor  =((double) this.valor) / 100;
+		String representacaoStringValor = String.format("%.2f", representacaoDoubleValor);
+
+		return super.toString() + " - R$ " + representacaoStringValor;
+	}
+	
 	public int getValor() {
 		return valor;
 	}	

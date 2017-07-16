@@ -131,14 +131,23 @@ public class Sistema {
 	}
 
 	/**
+	 * Método responsável por solicitar o cadastro de uma aposta com seguro do
+	 * tipo valor.
 	 * 
 	 * @param cenario
+	 *            Cenário escolhido para apostar.
 	 * @param apostador
+	 *            Nome do apostador.
 	 * @param valor
+	 *            Valor da aposta.
 	 * @param previsao
+	 *            Previsão da aposta.
 	 * @param valorSeguro
+	 *            Valor assegurado na aposta.
 	 * @param custo
-	 * @return
+	 *            Custo da criação de uma aposta assegurada.
+	
+	 * @return Retorna um int com o index da aposta.
 	 */
 	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custo) {
 
@@ -152,14 +161,23 @@ public class Sistema {
 	}
 
 	/**
+	 * Método responsável por solicitar o cadastro de uma aposta com seguro do
+	 * tipo valor.
 	 * 
 	 * @param cenario
+	 *            Cenário escolhido para apostar.
 	 * @param apostador
+	 *            Nome do apostador.
 	 * @param valor
+	 *            Valor da aposta.
 	 * @param previsao
-	 * @param taxaSegura
+	 *            Previsão da aposta.
+	 * @param valorSeguro
+	 *            Valor assegurado na aposta.
 	 * @param custo
-	 * @return
+	 *            Custo da criação de uma aposta assegurada.
+	
+	 * @return Retorna um int com o index da aposta.
 	 */
 	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao, double taxaSegura,
 			int custo) {
@@ -187,33 +205,45 @@ public class Sistema {
 	}
 
 	/**
+	 * Método responsável solicitar a alteração do tipo do seguro de uma aposta
+	 * assegurada.
 	 * 
 	 * @param cenario
+	 *            Cenário escolhido.
 	 * @param apostaAssegurada
+	 *            Aposta escolhida.
 	 * @param valor
-	 * @return
+	 *            Valor do seguro.
+	 * 
+	 * @return Retorna um int com o index da aposta alterada.
 	 */
 	public int alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
-		
+
 		String msgErro = "Erro na alteracao do seguro: ";
 		validacaoNoCenarioEscolhido(cenario, msgErro);
-		
+
 		Cenario refCenario = cenarios.get(cenario - 1);
 		return refCenario.alterarSeguroAposta(apostaAssegurada, valor);
 	}
 
 	/**
+	 * Método responsável solicitar a alteração do tipo do seguro de uma aposta
+	 * assegurada.
 	 * 
 	 * @param cenario
+	 *            Cenário escolhido.
 	 * @param apostaAssegurada
+	 *            Aposta escolhida.
 	 * @param taxa
-	 * @return
+	 *            Taxa do seguro.
+	 * 
+	 * @return Retorna um int com o index da aposta alterada.
 	 */
 	public int alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
-		
+
 		String msgErro = "Erro na alteracao do seguro: ";
 		validacaoNoCenarioEscolhido(cenario, msgErro);
-		
+
 		Cenario refCenario = cenarios.get(cenario - 1);
 		return refCenario.alterarSeguroAposta(apostaAssegurada, taxa);
 	}
@@ -291,7 +321,7 @@ public class Sistema {
 
 		refCenario.fecharApostaCenario(ocorreu);
 		this.caixa += getCaixaCenario(cenario);
-		
+
 		this.caixa -= refCenario.pagarSegurosCenario();
 
 	}

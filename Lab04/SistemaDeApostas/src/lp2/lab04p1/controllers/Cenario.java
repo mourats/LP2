@@ -65,18 +65,31 @@ public class Cenario {
 	 *            Previsão da aposta.
 	 */
 	public void adicionarNovaAposta(String apostador, int valor, String previsao) {
-		
+
 		String msgErro = "Erro no cadastro de aposta: ";
 		validacaoDadosDaAposta(apostador, valor, previsao, msgErro);
-		
+
 		Previsao previsaoIdentificada = Previsao.identificaPrevisao(previsao, msgErro);
 		Aposta aposta = new Aposta(apostador, valor, previsaoIdentificada);
-		
+
 		apostas.add(aposta);
 
 	}
 
-	protected void validacaoDadosDaAposta(String apostador, int valor, String previsao, String msgErro) {
+	/**
+	 * Método responsável por modularizar a chamada das verificações dos dados
+	 * da aposta.
+	 * 
+	 * @param apostador
+	 *            Nome do apostador.
+	 * @param valor
+	 *            Valor da aposta.
+	 * @param previsao
+	 *            Previsão da aposta.
+	 * @param msgErro
+	 *            Mensagem de erro do respectivo método.
+	 */
+	private void validacaoDadosDaAposta(String apostador, int valor, String previsao, String msgErro) {
 		Checks.verificaApostadorVazio(apostador, msgErro);
 		Checks.verificaValorZero(valor, msgErro);
 		Checks.verificaPrevisaoVazia(previsao, msgErro);
@@ -96,10 +109,10 @@ public class Cenario {
 	 *            Valor assegurado da aposta.
 	 */
 	public int adicionarNovaApostaSegura(String apostador, int valor, String previsao, int valorSeguro) {
-		
+
 		String msgErro = "Erro no cadastro de aposta assegurada por valor: ";
 		validacaoDadosDaAposta(apostador, valor, previsao, msgErro);
-		
+
 		Previsao previsaoIdentificada = Previsao.identificaPrevisao(previsao, msgErro);
 		ApostaSegura aposta = new ApostaSegura(apostador, valor, previsaoIdentificada, valorSeguro);
 		apostas.add(aposta);
@@ -120,10 +133,10 @@ public class Cenario {
 	 *            Taxa assegurada da aposta.
 	 */
 	public int adicionarNovaApostaSegura(String apostador, int valor, String previsao, double taxaSegura) {
-		
+
 		String msgErro = "Erro no cadastro de aposta assegurada por taxa: ";
 		validacaoDadosDaAposta(apostador, valor, previsao, msgErro);
-		
+
 		Previsao previsaoIdentificada = Previsao.identificaPrevisao(previsao, msgErro);
 		ApostaSegura aposta = new ApostaSegura(apostador, valor, previsaoIdentificada, taxaSegura);
 		apostas.add(aposta);

@@ -14,6 +14,13 @@ public class SeguroTaxa extends Seguro{
 	
 	public SeguroTaxa(double taxa){
 		this.taxa = taxa;
+		super.setTipo("TAXA");
+	}
+	
+	@Override
+	public String toString(){
+		int representacaoInteiraTaxa = (int) (taxa * 100);
+		return super.toString() + " - " + representacaoInteiraTaxa + "%";
 	}
 
 	public double getTaxa() {

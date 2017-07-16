@@ -10,7 +10,22 @@ package lp2.lab04p1.entidades;
 
 public abstract class Seguro {
 
+	private String tipo;
+
 	public Seguro() {
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	@Override
+	public String toString() {
+		return " - ASSEGURADA (" + this.tipo + ")";
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }
