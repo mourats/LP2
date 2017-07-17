@@ -300,6 +300,12 @@ public class Cenario {
 		Checks.verificaApostaNaoCadastrada(apostaAssegurada, apostas.size(), msgErro);
 	}
 
+	/**
+	 * Método responsável por retornar o valor dos seguros de um cenário para o
+	 * pagamento no momento em que ele é fechado.
+	 * 
+	 * @return Retorna um int com esse valor.
+	 */
 	public int pagarSegurosCenario() {
 		int valorSeguros = 0;
 		for (Aposta aposta : apostas) {

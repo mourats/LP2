@@ -105,8 +105,8 @@ public class CenarioTest {
 		cenarioBasicoUm.adicionarNovaAposta("Thiago", 150000, "VAI ACONTECER");
 		cenarioBasicoDois.adicionarNovaAposta("Thiago", 5000, "N VAI ACONTECER");
 
-		String msgUm = "Thiago - R$1500.00 - VAI ACONTECER" + NL;
-		String msgDois = "Thiago - R$50.00 - N VAI ACONTECER" + NL;
+		String msgUm = "Thiago - R$ 1500,00 - VAI ACONTECER" + NL;
+		String msgDois = "Thiago - R$ 50,00 - N VAI ACONTECER" + NL;
 		assertEquals(cenarioBasicoUm.exibirApostasCenario(), msgUm);
 		assertEquals(cenarioBasicoDois.exibirApostasCenario(), msgDois);
 
@@ -118,8 +118,8 @@ public class CenarioTest {
 	 */
 	@Test
 	public void testFecharApostaCenario() {
-		String msgUm = "A grade vai mudar em 2018.1! - Não finalizado";
-		String msgDois = "Tudo que sobe, desce! - Não finalizado";
+		String msgUm = "A grade vai mudar em 2018.1! - Nao finalizado";
+		String msgDois = "Tudo que sobe, desce! - Nao finalizado";
 
 		assertEquals(cenarioBasicoUm.toString(), msgUm);
 		assertEquals(cenarioBasicoDois.toString(), msgDois);

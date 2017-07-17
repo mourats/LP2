@@ -172,8 +172,8 @@ public class Sistema {
 	 *            Valor da aposta.
 	 * @param previsao
 	 *            Previsão da aposta.
-	 * @param valorSeguro
-	 *            Valor assegurado na aposta.
+	 * @param taxaSegura
+	 *            Taxa assegurada da aposta.
 	 * @param custo
 	 *            Custo da criação de uma aposta assegurada.
 	

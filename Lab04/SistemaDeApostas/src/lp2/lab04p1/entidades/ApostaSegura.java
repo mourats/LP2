@@ -14,12 +14,38 @@ public class ApostaSegura extends Aposta {
 
 	private Seguro seguro;
 
+	/**
+	 * Construtor responsável por inicializar uma aposta segura com o seguro por
+	 * valor.
+	 * 
+	 * @param apostador
+	 *            Nome do apostador.
+	 * @param valor
+	 *            Valor da aposta.
+	 * @param previsao
+	 *            Previsão da aposta.
+	 * @param valorSeguro
+	 *            Valor assegurado do valor da aposta.
+	 */
 	public ApostaSegura(String apostador, int valor, Previsao previsao, int valorSeguro) {
 		super(apostador, valor, previsao);
 		this.seguro = new SeguroValor(valorSeguro);
 
 	}
 
+	/**
+	 * Construtor responsável por inicializar uma aposta segura com o seguro por
+	 * taxa.
+	 * 
+	 * @param apostador
+	 *            Nome do apostador.
+	 * @param valor
+	 *            Valor da aposta.
+	 * @param previsao
+	 *            Previsão da aposta.
+	 * @param taxaSegura
+	 *            Taxa assegurada do valor da aposta.
+	 */
 	public ApostaSegura(String apostador, int valor, Previsao previsao, double taxaSegura) {
 		super(apostador, valor, previsao);
 		seguro = new SeguroTaxa(taxaSegura);
@@ -30,14 +56,32 @@ public class ApostaSegura extends Aposta {
 		return super.toString() + this.seguro.toString();
 	}
 
+	/**
+	 * Método responsável por alterar o seguro para taxa.
+	 * 
+	 * @param taxa
+	 *            Taxa do novo seguro.
+	 */
 	public void alterarSeguro(double taxa) {
 		this.seguro = new SeguroTaxa(taxa);
 	}
 
+	/**
+	 * Método responsável por alterar o seguro para valor.
+	 * 
+	 * @param valor
+	 *            Valor do novo seguro.
+	 */
 	public void alterarSeguro(int valor) {
 		this.seguro = new SeguroValor(valor);
 	}
 
+	/**
+	 * Método responsável por retornar o valor assegurado desta aposta, seja ele
+	 * por taxa ou por valor.
+	 * 
+	 * @return Retorna um int com esse valor.
+	 */
 	public int getValorSegurado() {
 		if (this.seguro.getTipo().equals("TAXA"))
 			return (int) (super.getValor() * ((SeguroTaxa) this.seguro).getTaxa());

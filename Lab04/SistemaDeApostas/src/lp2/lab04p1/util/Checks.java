@@ -48,7 +48,7 @@ public class Checks {
 	 */
 	public static void verificaCenarioNaoCadastrado(int cenario, int quant_cenarios, String msg) {
 		if (cenario - 1 >= quant_cenarios)
-			throw new NullPointerException(msg + "Cenario nao cadastrado");
+			throw new IllegalArgumentException(msg + "Cenario nao cadastrado");
 	}
 
 	/**
