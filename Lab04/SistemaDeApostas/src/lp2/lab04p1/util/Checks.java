@@ -4,7 +4,7 @@ import lp2.lab04p1.entidades.Aposta;
 import lp2.lab04p1.enums.Status;
 
 /**
- * Classe responsável por encapsular os métodos relacionados com validações no
+ * Classe responsável por encapsular os métodos relacionados a validações no
  * projeto.
  * 
  * Laboratório de Programação 2 - Lab 04 Parte 01
@@ -20,6 +20,9 @@ public class Checks {
 	 * 
 	 * @param caixa
 	 *            Caixa a ser válidado.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaCaixaMenorZero(int caixa, String msg) {
 		if (caixa < 0)
@@ -32,6 +35,9 @@ public class Checks {
 	 * 
 	 * @param taxa
 	 *            Taxa a ser válidada.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaTaxaMenorZero(double taxa, String msg) {
 		if (taxa < 0)
@@ -45,6 +51,11 @@ public class Checks {
 	 * @param cenario
 	 *            Cenário escolhido.
 	 * 
+	 * @param quant_cenarios
+	 *            Quantidade de cenários existentes.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaCenarioNaoCadastrado(int cenario, int quant_cenarios, String msg) {
 		if (cenario - 1 >= quant_cenarios)
@@ -57,6 +68,9 @@ public class Checks {
 	 * 
 	 * @param cenario
 	 *            Cenário escolhido.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.            
 	 * 
 	 */
 	public static void verificaCenarioInvalido(int cenario, String msg) {
@@ -71,6 +85,9 @@ public class Checks {
 	 * 
 	 * @param descricao
 	 *            Valor a ser válidado.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.         
 	 */
 	public static void verificaDescricaoVazia(String descricao, String msg) {
 		if (descricao.trim().isEmpty())
@@ -85,6 +102,9 @@ public class Checks {
 	 * @param descricao
 	 *            Valor a ser válidado.
 	 * 
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaDescricaoNula(String descricao, String msg) {
 		if (descricao.isEmpty())
@@ -92,12 +112,15 @@ public class Checks {
 	}
 
 	/**
-	 * Método que verifica se cenário escolhido está cadastrado, caso não esteja
-	 * lança uma exceção e imterrompe a execução do programa.
+	 * Método que verifica se cenário escolhido já está fechado, não podendo
+	 * assim ser fechado novamente.
 	 * 
 	 * @param estado
 	 *            Estado do cenário escolhido.
 	 * 
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaCenarioJaFechado(String estado, String msg) {
 		if (estado != Status.NAO_FINALIZADO.getStatus())
@@ -105,12 +128,15 @@ public class Checks {
 	}
 
 	/**
-	 * Método que verifica se a previsão é nula. Lança uma execeção caso a
-	 * previsão seja nula e interrompe a execução do programa.
+	 * Método que verifica se a previsão é uma string composta por espaços ou
+	 * nula. Caso isso aconteça, lança uma exceção e interrompe a execução do
+	 * programa.
 	 * 
 	 * @param previsao
 	 *            Valor a ser válidado.
-	 * 
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaPrevisaoVazia(String previsao, String msg) {
 		if (previsao.trim().isEmpty())
@@ -124,6 +150,9 @@ public class Checks {
 	 * 
 	 * @param apostador
 	 *            Valor a ser válidado.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.           
 	 */
 	public static void verificaApostadorVazio(String apostador, String msg) {
 		if (apostador.trim().isEmpty())
@@ -136,6 +165,9 @@ public class Checks {
 	 * 
 	 * @param valor
 	 *            Valor a ser válidado.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.          
 	 */
 	public static void verificaValorZero(int valor, String msg) {
 		if (valor <= 0)
@@ -143,12 +175,14 @@ public class Checks {
 	}
 
 	/**
-	 * Método que verifica se cenário escolhido está cadastrado, caso não esteja
-	 * lança uma exceção e imterrompe a execução do programa.
+	 * Método que verifica se cenário escolhido ainda está aberto para fazer
+	 * novas apostas.
 	 * 
 	 * @param estado
 	 *            Estado do cenário escolhido.
-	 * 
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaCenarioAindaAberto(String estado, String msg) {
 		if (estado == Status.NAO_FINALIZADO.getStatus())
@@ -156,55 +190,65 @@ public class Checks {
 	}
 
 	/**
-	 * Método que verifica se cenário escolhido é válido, caso não seja lança
-	 * uma exceção e imterrompe a execução do programa.
+	 * Método que verifica se o bônus é menor ou igual a zero. Caso seja, lança
+	 * uma exceção e interrompe a execução do programa.
 	 * 
-	 * @param cenario
-	 *            Cenário escolhido.
-	 * 
+	 * @param bonus
+	 *            Bônus do novo cénario bônus.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaBonusInvalido(int bonus, String msg) {
 		if (bonus <= 0)
 			throw new NullPointerException(msg + "Bonus invalido");
 	}
-	
+
 	/**
-	 * Método que verifica se cenário escolhido é válido, caso não seja lança
-	 * uma exceção e imterrompe a execução do programa.
+	 * Método que verifica se aposta escolhida é válida, caso não seja lança uma
+	 * exceção e interrompe a execução do programa.
 	 * 
-	 * @param cenario
-	 *            Cenário escolhido.
-	 * 
+	 * @param aposta
+	 *            Aposta escolhido.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaApostaInvalida(int aposta, String msg) {
 		if (aposta <= 0)
 			throw new NullPointerException(msg + "Aposta invalida");
 	}
-	
+
 	/**
 	 * Método que verifica se cenário escolhido está cadastrado, caso não esteja
 	 * lança uma exceção e imterrompe a execução do programa.
 	 * 
-	 * @param cenario
-	 *            Cenário escolhido.
-	 * 
+	 * @param aposta
+	 *            Aposta escolhido.
+	 * @param quant_apostas
+	 *            Quantidade de apostas existentes no cenário.          
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
 	 */
 	public static void verificaApostaNaoCadastrada(int aposta, int quant_apostas, String msg) {
 		if (aposta - 1 >= quant_apostas)
 			throw new NullPointerException(msg + "Aposta nao cadastrada");
 	}
-	
+
 	/**
-	 * Método que verifica se o apostador é uma string composta por espaços ou
-	 * nula. Caso isso aconteça, lança uma exceção e interrompe a execução do
-	 * programa.
+	 * Método que verifica se um objeto é uma aposta, ou seja, não é uma aposta
+	 * segura.
 	 * 
-	 * @param apostador
-	 *            Valor a ser válidado.
+	 * @param aposta
+	 *            Objeto que será válidado.
+	 * @param msg
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.          
 	 */
 	public static void verificaApostaNaoSegura(Aposta aposta, String msg) {
 		if (aposta.getClass() == Aposta.class)
 			throw new IllegalArgumentException(msg + "Aposta nao assegura");
 	}
-	
+
 }

@@ -1,8 +1,5 @@
 package lp2.lab04p1.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Classe responsável por moldar a representação de um cenário e controlar as apostas de um sistema.
  * 
@@ -11,6 +8,8 @@ import java.util.List;
  * @author Thiago Santos de Moura - 116210967
  */
 
+import java.util.ArrayList;
+import java.util.List;
 import lp2.lab04p1.entidades.Aposta;
 import lp2.lab04p1.entidades.ApostaSegura;
 import lp2.lab04p1.enums.Previsao;
@@ -73,7 +72,6 @@ public class Cenario {
 		Aposta aposta = new Aposta(apostador, valor, previsaoIdentificada);
 
 		apostas.add(aposta);
-
 	}
 
 	/**
@@ -107,6 +105,8 @@ public class Cenario {
 	 *            Previsão da aposta.
 	 * @param valorSeguro
 	 *            Valor assegurado da aposta.
+	 * 
+	 * @return Retornar o indentificador númerico dessa nova aposta segura.
 	 */
 	public int adicionarNovaApostaSegura(String apostador, int valor, String previsao, int valorSeguro) {
 
@@ -131,6 +131,8 @@ public class Cenario {
 	 *            Previsão da aposta.
 	 * @param taxaSegura
 	 *            Taxa assegurada da aposta.
+	 * 
+	 * @return Retornar o indentificador númerico dessa nova aposta segura.
 	 */
 	public int adicionarNovaApostaSegura(String apostador, int valor, String previsao, double taxaSegura) {
 
@@ -246,8 +248,8 @@ public class Cenario {
 	 * 
 	 * @param apostaAssegurada
 	 *            Index da aposta escolhida.
-	 * @param taxa
-	 *            Taxa assegurada.
+	 * @param valor
+	 *            Valor assegurado.
 	 * 
 	 * @return Retorna o index dessa aposta.
 	 */
@@ -309,8 +311,7 @@ public class Cenario {
 	public int pagarSegurosCenario() {
 		int valorSeguros = 0;
 		for (Aposta aposta : apostas) {
-			if (aposta.getClass() != Aposta.class)
-				valorSeguros += ((ApostaSegura) aposta).getValorSegurado();
+			valorSeguros += aposta.getValorSegurado();
 		}
 		return valorSeguros;
 	}

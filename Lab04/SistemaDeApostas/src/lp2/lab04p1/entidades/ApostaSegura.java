@@ -29,7 +29,7 @@ public class ApostaSegura extends Aposta {
 	 */
 	public ApostaSegura(String apostador, int valor, Previsao previsao, int valorSeguro) {
 		super(apostador, valor, previsao);
-		this.seguro = new SeguroValor(valorSeguro);
+		this.seguro = new SeguroValor("VALOR", valorSeguro);
 
 	}
 
@@ -48,7 +48,7 @@ public class ApostaSegura extends Aposta {
 	 */
 	public ApostaSegura(String apostador, int valor, Previsao previsao, double taxaSegura) {
 		super(apostador, valor, previsao);
-		seguro = new SeguroTaxa(taxaSegura);
+		seguro = new SeguroTaxa("TAXA", taxaSegura);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class ApostaSegura extends Aposta {
 	 *            Taxa do novo seguro.
 	 */
 	public void alterarSeguro(double taxa) {
-		this.seguro = new SeguroTaxa(taxa);
+		this.seguro = new SeguroTaxa("TAXA", taxa);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ApostaSegura extends Aposta {
 	 *            Valor do novo seguro.
 	 */
 	public void alterarSeguro(int valor) {
-		this.seguro = new SeguroValor(valor);
+		this.seguro = new SeguroValor("VALOR", valor);
 	}
 
 	/**
@@ -83,11 +83,6 @@ public class ApostaSegura extends Aposta {
 	 * @return Retorna um int com esse valor.
 	 */
 	public int getValorSegurado() {
-		if (this.seguro.getTipo().equals("TAXA"))
-			return (int) (super.getValor() * ((SeguroTaxa) this.seguro).getTaxa());
-
-		if (this.seguro.getTipo().equals("VALOR"))
-			return ((SeguroValor) this.seguro).getValor();
-		return 0;
+		return seguro.retornaSeguro(this.getValor());
 	}
 }

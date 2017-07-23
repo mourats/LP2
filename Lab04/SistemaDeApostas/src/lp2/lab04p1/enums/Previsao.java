@@ -21,12 +21,18 @@ public enum Previsao {
 	public String getPrevisao() {
 		return this.previsao;
 	}
-	
+
 	/**
 	 * Método responsável por identificar a previsão da aposta.
 	 * 
 	 * @param previsao
 	 *            String da previsão que será avaliada.
+	 * 
+	 * @param msgErro
+	 *            Mensagem de erro referente ao método que está chamando esse
+	 *            método.
+	 * 
+	 * @return Retornar uma Previsão indentificada.
 	 */
 	public static Previsao identificaPrevisao(String previsao, String msgErro) throws IllegalArgumentException {
 		if (previsao.equals("VAI ACONTECER"))

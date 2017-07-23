@@ -151,4 +151,32 @@ public class CenarioTest {
 
 	}
 
+	/**
+	 * Método resposável por certicar o lançamento de uma exceção em um
+	 * apostador nulo ou composto por espaços.
+	 * 
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testApostadorVazia() {
+		cenarioBasicoUm.adicionarNovaAposta("", 15000, "VAI ACONTECER");
+	}
+
+	/**
+	 * Método resposável por certicar o lançamento de uma exceção em um valor
+	 * zero.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAValorZero() {
+		cenarioBasicoUm.adicionarNovaAposta("Thiago", -2, "VAI ACONTECER");
+	}
+	
+	/**
+	 * Método resposável por certicar o lançamento de uma exceção em uma
+	 * previsão composto por espaços.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testPrevisaoVazia() {
+		cenarioBasicoUm.adicionarNovaAposta("Thiago", 14500, "");
+	}
+
 }

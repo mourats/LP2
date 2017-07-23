@@ -52,13 +52,13 @@ public class Sistema {
 	 * @param descricao
 	 *            Descrição do novo cenário.
 	 * 
-	 * @return Retorna o int refente a sua posição no ArrayList.
+	 * @return Retorna o int refente a sua posição no ArrayList + 1.
 	 */
 	public int cadastrarCenario(String descricao) {
 
 		Cenario cenario = new Cenario(descricao);
 		cenarios.add(cenario);
-		return cenarios.indexOf(cenario);
+		return cenarios.indexOf(cenario) + 1;
 	}
 
 	/**
@@ -68,13 +68,13 @@ public class Sistema {
 	 *            Descrição do novo cenário.
 	 * @param bonus
 	 *            Bônus do novo cenário.
-	 * @return Retorna o int refente a sua posição no ArrayList.
+	 * @return Retorna o int refente a sua posição no ArrayList + 1.
 	 */
 	public int cadastrarCenario(String descricao, int bonus) {
 		this.caixa -= bonus;
 		CenarioBonus cenario = new CenarioBonus(descricao, bonus);
 		cenarios.add(cenario);
-		return cenarios.indexOf(cenario);
+		return cenarios.indexOf(cenario) + 1;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class Sistema {
 
 		String stringRetorno = "";
 		for (Cenario cenario : cenarios)
-			stringRetorno += cenarios.indexOf(cenario) + " - " + cenario.toString() + NL;
+			stringRetorno += cenarios.indexOf(cenario)+1 + " - " + cenario.toString() + NL;
 
 		return stringRetorno;
 	}
@@ -146,7 +146,7 @@ public class Sistema {
 	 *            Valor assegurado na aposta.
 	 * @param custo
 	 *            Custo da criação de uma aposta assegurada.
-	
+	 * 
 	 * @return Retorna um int com o index da aposta.
 	 */
 	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custo) {
@@ -176,7 +176,7 @@ public class Sistema {
 	 *            Taxa assegurada da aposta.
 	 * @param custo
 	 *            Custo da criação de uma aposta assegurada.
-	
+	 * 
 	 * @return Retorna um int com o index da aposta.
 	 */
 	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao, double taxaSegura,

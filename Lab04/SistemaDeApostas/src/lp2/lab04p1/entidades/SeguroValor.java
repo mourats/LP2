@@ -7,12 +7,14 @@ public class SeguroValor extends Seguro {
 	/**
 	 * Construtor responsável por inicializar um Seguro do tipo Valor.
 	 * 
+	 * @param tipo
+	 *            Tipo do seguro.
 	 * @param valor
 	 *            Valor do seguro.
 	 */
-	public SeguroValor(int valor) {
+	public SeguroValor(String tipo, int valor) {
+		super(tipo);
 		this.valor = valor;
-		super.setTipo("VALOR");
 	}
 
 	@Override
@@ -23,7 +25,8 @@ public class SeguroValor extends Seguro {
 		return super.toString() + " - R$ " + representacaoStringValor;
 	}
 
-	public int getValor() {
+	@Override
+	public int retornaSeguro(int aposta) {
 		return valor;
 	}
 }

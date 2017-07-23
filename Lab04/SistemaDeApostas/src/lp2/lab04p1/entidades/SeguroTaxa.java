@@ -16,12 +16,16 @@ public class SeguroTaxa extends Seguro {
 	/**
 	 * Construtor responsável por inicializar um Seguro do tipo Taxa.
 	 * 
+	 * @param tipo
+	 *            Tipo do seguro.
+	 * 
 	 * @param taxa
 	 *            Taxa do seguro.
 	 */
-	public SeguroTaxa(double taxa) {
+	public SeguroTaxa(String tipo, double taxa) {
+		super(tipo);
 		this.taxa = taxa;
-		super.setTipo("TAXA");
+
 	}
 
 	@Override
@@ -30,7 +34,8 @@ public class SeguroTaxa extends Seguro {
 		return super.toString() + " - " + representacaoInteiraTaxa + "%";
 	}
 
-	public double getTaxa() {
-		return taxa;
+	@Override
+	public int retornaSeguro(int aposta) {
+		return (int) (aposta * this.taxa);
 	}
 }

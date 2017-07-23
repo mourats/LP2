@@ -26,7 +26,7 @@ public class SistemaTest {
 	 */
 	@Before
 	public void criaSistema() {
-		sistema = new Sistema(1000, 0.2);
+		sistema = new Sistema(100000, 0.2);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testGetCaixa() {
-		assertEquals(sistema.getCaixa(), 1000);
+		assertEquals(sistema.getCaixa(), 100000);
 	}
 
 	/**
@@ -49,6 +49,13 @@ public class SistemaTest {
 		assertEquals(sistema.cadastrarCenario("Um dia eu termino esse lab!"), 3);
 	}
 
+	@Test
+	public void testCadastrarCenarioBonus() {
+		assertEquals(sistema.cadastrarCenario("A grade vai mudar em 2018.1!", 5200), 1);
+		assertEquals(sistema.cadastrarCenario("Tudo que sobe, desce!", 10500), 2);
+		assertEquals(sistema.cadastrarCenario("Um dia eu termino esse lab!", 9999), 3);
+	}
+
 	/**
 	 * Método responsável por encapsular o cadastro de cenários recorrentes nos
 	 * testes do sistema.
@@ -56,6 +63,7 @@ public class SistemaTest {
 	private void cadastrarCenariosParaTestes() {
 		sistema.cadastrarCenario("A grade vai mudar em 2018.1!");
 		sistema.cadastrarCenario("Tudo que sobe, desce!");
+		sistema.cadastrarCenario("Eu vou tirar 9,9 em cálculo!", 100);
 	}
 
 	/**
@@ -69,6 +77,8 @@ public class SistemaTest {
 		sistema.cadastrarAposta(2, "José", 20000, "VAI ACONTECER");
 		sistema.cadastrarAposta(2, "Pedro", 25000, "VAI ACONTECER");
 		sistema.cadastrarAposta(2, "Simão", 30000, "N VAI ACONTECER");
+		sistema.cadastrarAposta(3, "Thiago", 15000, "VAI ACONTECER");
+		sistema.cadastrarAposta(3, "Yago", 10000, "N VAI ACONTECER");
 	}
 
 	/**
@@ -76,18 +86,18 @@ public class SistemaTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testExibirCenarioNaoCadastrado() {
-		
+
 		cadastrarCenariosParaTestes();
 		sistema.exibirCenario(3);
 		sistema.exibirCenario(4);
 	}
-	
+
 	/**
 	 * Método responsável por testar o acesso a um cenário inválido.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testExibirCenariInvalido() {
-		
+
 		sistema.exibirCenario(0);
 		sistema.exibirCenario(-1);
 	}
@@ -113,8 +123,9 @@ public class SistemaTest {
 
 		cadastrarCenariosParaTestes();
 
-		String msg = "0 - A grade vai mudar em 2018.1! - Nao finalizado" + NL
-				+ "1 - Tudo que sobe, desce! - Nao finalizado" + NL;
+		String msg = "1 - A grade vai mudar em 2018.1! - Nao finalizado" + NL
+				+ "2 - Tudo que sobe, desce! - Nao finalizado" + NL
+				+ "3 - Eu vou tirar 9,9 em cálculo! - Nao finalizado - R$ 1,00" + NL;
 
 		assertEquals(sistema.exibirCenarios(), msg);
 	}
@@ -132,11 +143,46 @@ public class SistemaTest {
 		assertEquals(sistema.exibeApostas(2), "");
 
 		sistema.cadastrarAposta(1, "Thiago", 15000, "VAI ACONTECER");
-		sistema.cadastrarAposta(2, "Thiago", 10000, "N VAI ACONTECER");
+		sistema.cadastrarAposta(2, "José", 10000, "N VAI ACONTECER");
 
 		assertEquals(sistema.exibeApostas(1), "Thiago - R$ 150,00 - VAI ACONTECER" + NL);
-		assertEquals(sistema.exibeApostas(2), "Thiago - R$ 100,00 - N VAI ACONTECER" + NL);
+		assertEquals(sistema.exibeApostas(2), "José - R$ 100,00 - N VAI ACONTECER" + NL);
 
+	}
+
+	/**
+	 * Método responsável por testar o cadastro de apostas em cenários.
+	 * Avaliando sua existência antes e depois.
+	 */
+	@Test
+	public void testCadastrarApostaSeguras() {
+
+		cadastrarCenariosParaTestes();
+
+		assertEquals(sistema.exibeApostas(3), "");
+
+		sistema.cadastrarAposta(3, "Matheus", 15000, "VAI ACONTECER", 1500, 150);
+		sistema.cadastrarAposta(3, "Matias", 10000, "N VAI ACONTECER", 0.1, 100);
+		sistema.cadastrarAposta(3, "Nascimento", 12000, "VAI ACONTECER", 0.2, 120);
+
+		assertEquals(sistema.exibeApostas(3),
+				"Matheus - R$ 150,00 - VAI ACONTECER - ASSEGURADA (VALOR) - R$ 15,00" + NL
+						+ "Matias - R$ 100,00 - N VAI ACONTECER - ASSEGURADA (TAXA) - 10%" + NL
+						+ "Nascimento - R$ 120,00 - VAI ACONTECER - ASSEGURADA (TAXA) - 20%" + NL);
+
+	}
+
+	/**
+	 * Método responsável por testar o cadastro de uma aposta em um cenário não
+	 * cadastrado.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testCadastrarApostaEmCenarioInvalido() {
+
+		cadastrarCenariosParaTestes();
+		sistema.cadastrarAposta(5, "Matheus", 15000, "VAI ACONTECER", 1500, 150);
+		sistema.cadastrarAposta(4, "Matias", 10000, "N VAI ACONTECER", 0.1, 100);
+		sistema.cadastrarAposta(6, "Nascimento", 12000, "VAI ACONTECER", 0.2, 120);
 	}
 
 	/**
@@ -183,11 +229,40 @@ public class SistemaTest {
 
 		cadastrarCenariosParaTestes();
 		cadastrarApostasParaTestes();
-		assertEquals(sistema.getCaixa(), 1000);
+		assertEquals(sistema.getCaixa(), 99900);
 		sistema.fecharAposta(1, true);
-		assertEquals(sistema.getCaixa(), 3300);
+		assertEquals(sistema.getCaixa(), 102200);
 		sistema.fecharAposta(2, false);
-		assertEquals(sistema.getCaixa(), 12300);
+		assertEquals(sistema.getCaixa(), 111200);
+		sistema.fecharAposta(3, true);
+		assertEquals(sistema.getCaixa(), 113200);
+	}
+
+	/**
+	 * Método responsável por testar o fechamento de um cenário com apostas
+	 * seguras e o pagamentos dos seus respectivos seguros.
+	 */
+	@Test
+	public void testFecharApostaSeguras() {
+
+		cadastrarCenariosParaTestes();
+
+		sistema.cadastrarAposta(1, "Matheus", 15000, "VAI ACONTECER", 1500, 150);
+		sistema.cadastrarAposta(2, "Matias", 10000, "N VAI ACONTECER", 0.1, 100);
+		sistema.cadastrarAposta(3, "Nascimento", 12000, "VAI ACONTECER", 0.2, 120);
+		
+		// 100000 - 100 + 150 + 100 + 120
+		assertEquals(sistema.getCaixa(), 100270);
+		sistema.fecharAposta(1, false);
+		// 100270 + 3000 - 1500
+		assertEquals(sistema.getCaixa(), 101770);
+		sistema.fecharAposta(2, true);
+		// 101770 + 2000 - 1000
+		assertEquals(sistema.getCaixa(), 102770);
+		sistema.fecharAposta(3, false);
+		// 102770 + 2400 - 2400
+		assertEquals(sistema.getCaixa(), 102770);
+		
 	}
 
 	/**

@@ -12,15 +12,12 @@ public abstract class Seguro {
 
 	private String tipo;
 
-	public Seguro() {
+	public Seguro(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public String getTipo() {
 		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	@Override
@@ -28,4 +25,5 @@ public abstract class Seguro {
 		return " - ASSEGURADA (" + this.tipo + ")";
 	}
 
+	public abstract int retornaSeguro(int aposta);
 }

@@ -51,5 +51,9 @@ public class Aposta {
 	public int getValor() {
 		return valor;
 	}
+	
+	public int getValorSegurado(){
+		return 0;
+	}
 
 }
